@@ -110,3 +110,13 @@ nav a {
     height: 200px;
     border: 10px solid rgb(181, 223, 108);
 }
+.phone {
+    color: white;
+    justify-content: center;
+    gap: 0;
+    /* padding: 10px; */
+}
+
+.phone h3 {
+    margin: 10px;
+}
