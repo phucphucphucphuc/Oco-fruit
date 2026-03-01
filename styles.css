@@ -20,6 +20,13 @@ nav {
     /* border: red solid   ; */
 }
 
+nav img {
+    position: absolute;
+    left: 1px;
+    width: 10px;
+    height: 50px;
+}
+
 nav a {
     /* border: solid black; */
     padding: 10px; 
@@ -28,4 +35,8 @@ nav a {
     font-size: 25px;
     background-color: ;
     /* height: 100%; */
+}
+
+.logo {
+    width: 300px;
 }
