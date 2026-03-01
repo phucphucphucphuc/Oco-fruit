@@ -8,7 +8,7 @@ body {
 nav {
     background-color: rgb(156, 175, 50);
     position: fixed;
-    width: 1200px;
+    width: 98.6%;
     height: 50px;
     padding: 0px;
     margin: 0px;
@@ -73,9 +73,6 @@ nav a {
     height: 150px;
 }
 
-
-
 .icon {
     width: 100px;
 }
-
