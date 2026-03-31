@@ -1,0 +1,98 @@
+/* --------------------------------- INDEX ---------------------------------------- */
+
+.index .section {
+    height: 100vh;
+    width: 100%;
+}
+
+.section * {
+    overflow: visible;
+    color: white
+}
+
+.index .s1 img {
+    position: absolute;
+    z-index: -1;
+    width: 60%;
+
+    right: 1px;
+
+    padding-top: 30vh;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.s1 {
+    height: 100vh;
+}
+
+.s1 h1 {
+    font-size: 80px;
+    
+    text-shadow:
+    2px 2px 0 rgb(156, 175, 50),
+    -2px -2px 0 rgb(156, 175, 50),
+    2px -2px 0 rgb(156, 175, 50),
+    -2px 2px 0 rgb(156, 175, 50);
+}
+
+.s1 h4 {
+    font-size: 22px;
+}
+
+.s1 .text {
+    display: flex;
+
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+
+    height: 100%;
+    width: fit-content;
+}
+
+.button {
+    padding: 15px 0 10px 0;
+    display: flex;
+    gap: 20px;
+}
+
+.button a {
+    font-size: 16px;
+    background-color: rgb(156, 175, 50);
+
+    padding: 8px 16px 8px 16px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.button a:hover {
+    background-color: rgb(134, 150, 43);
+}
+
+.s2 {
+    display: flex;
+    justify-content: right;
+}
+
+.s2 img {
+    width: 50vw;
+
+    left: 40px;
+    position: absolute;
+    z-index: -1;
+}
+
+.s2 .text {
+    height: 100%;
+    width: fit-content;
+    max-width: 40vw;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* border: solid black; */
+}

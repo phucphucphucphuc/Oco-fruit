@@ -116,7 +116,7 @@ nav img {
 nav a {
     padding: 8px 16px 8px 16px;
 
-    color: black; 
+    color: white; 
     text-decoration: none;
     font-size: 20px;
     font-weight: 600;
@@ -125,6 +125,16 @@ nav a {
 nav a:hover {
     background-color: rgb(134, 150, 43);
 }
+
+
+/* ------------------------------------------MAIN------------------------------------------ */
+main {
+    min-height: 800px;
+    padding: 70px 40px 10px 40px;
+    overflow-anchor: none;
+    overflow: hidden;
+}
+
 
 /* ------------------------------------------FOOTER------------------------------------------ */
 footer {
@@ -198,9 +208,3 @@ footer iframe {
     border: 10px solid rgb(181, 223, 108);
 }
 
-/* ------------------------------------------MAIN------------------------------------------ */
-main {
-    min-height: 800px;
-    padding: 70px 40px 10px 40px;
-    overflow-anchor: none;
-}

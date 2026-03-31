@@ -24,9 +24,9 @@
     width: 100%;
 }
 
-/* ---------------------------------ORDERING---------------------------------------- */
+/* --------------------------------- ORDERING ---------------------------------------- */
 
-main form {
+.order form {
     display: flex;
     justify-content:space-evenly;
     align-items: center;
