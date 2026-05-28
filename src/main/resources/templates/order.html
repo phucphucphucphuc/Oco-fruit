@@ -1,101 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Oco Fruit - Order</title>
-    
-    <script src="include/include.js"></script>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
 
-    <style>
-        nav #order {
-            background-color: rgb(134, 150, 43);
-        }
-    </style>
-</head>
-
-<body>
-    <div id="nav-placeholder"></div>
+<body th:class="${page}">
+    <div th:replace="~{fragments/nav :: nav}"></div>
     
     <main class="order">
         <h1>Menu</h1>
+        <h3>Build your fruit box!</h3>
         
         <form>
             <label for="xoai" class="fruit">
                 <input type="checkbox" name="fruit" value="xoai" id="xoai">
-                <img src="assets/order/xoai.jpg">
+                <img src="/assets/order/xoai.jpg">
                 <strong>XOÀI</strong>
             </label>
 
             <label for="coc" class="fruit">
                 <input type="checkbox" name="fruit" value="coc" id="coc">
-                <img src="assets/order/coc.jpg">
+                <img src="/assets/order/coc.jpg">
                 <strong>CÓC</strong>
             </label>
         
             <label for="oi" class="fruit">
                  <input type="checkbox" name="fruit" value="oi" id="oi">
-                <img src="assets/order/oi.jpg">
+                <img src="/assets/order/oi.jpg">
                 <strong>ỔI</strong>
             </label>
 
             <label for="cusan" class="fruit">
                 <input type="checkbox" name="fruit" value="cusan" id="cusan">
-                <img src="assets/order/cusan.jpg">
+                <img src="/assets/order/cusan.jpg">
                 <strong>CỦ SẮN</strong>
             </label>
 
             
             <label for="buoi" class="fruit">
                 <input type="checkbox" name="fruit" value="buoi" id="buoi">
-                <img src="assets/order/buoi.jpg">
+                <img src="/assets/order/buoi.jpg">
                 <strong>BƯỞI</strong>
             </label>
 
             
             <label for="dudu" class="fruit">
                 <input type="checkbox" name="fruit" value="dudu" id="dudu">
-                <img src="assets/order/dudu.jpg">
+                <img src="/assets/order/dudu.jpg">
                 <strong>ĐU ĐỦ</strong>
             </label>
 
             
             <label for="thanhlong" class="fruit">
                 <input type="checkbox" name="fruit" value="thanhlong" id="thanhlong">
-                <img src="assets/order/thanhlong.jpg">
+                <img src="/assets/order/thanhlong.jpg">
                 <strong>THANH LONG</strong>
             </label>
 
             
             <label for="duahau" class="fruit">
                 <input type="checkbox" name="fruit" value="duahau" id="duahau">
-                <img src="assets/order/duahau.jpg">
+                <img src="/assets/order/duahau.jpg">
                 <strong>DƯA HẤU</strong>
             </label>
 
             
             <label for="dualuoi" class="fruit">
                 <input type="checkbox" name="fruit" value="dualuoi" id="dualuoi">
-                <img src="assets/order/dualuoi.jpg">
+                <img src="/assets/order/dualuoi.jpg">
                 <strong>DƯA LƯỚI</strong>
             </label>
 
             
             <label for="mit" class="fruit">
                 <input type="checkbox" name="fruit" value="mit" id="mit">
-                <img src="assets/order/mit.jpg">
+                <img src="/assets/order/mit.jpg">
                 <strong>MÍT</strong>
             </label>
 
             
             <label for="thom" class="fruit">
                 <input type="checkbox" name="fruit" value="thom" id="thom">
-                <img src="assets/order/thom.jpg">
+                <img src="/assets/order/thom.jpg">
                 <strong>THƠM</strong>
             </label>
+            
+            <h4 class="limitNoti" id="limitNoti"></h4>
+            <h4 class="limitNoti2" id="limitNoti2"></h4>
 
-
+            
+            <div class="cart">
+                <button type="submit" id="addCartBtn" class="addCartBtn" disabled>Add to Cart</button>
+                <button type="submit" id="addCartBtn" class="addCartBtn" disabled>Purchase</button>
+            </div>
         </form>
     </main>
     
-    <div id="footer-placeholder"></div>
+
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <script th:src="@{/js/order.js}"></script>
 </body>
 </html>

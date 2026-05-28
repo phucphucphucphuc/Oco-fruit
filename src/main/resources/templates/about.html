@@ -1,18 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Oco Fruit - About</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
 
-    <script src="include/include.js"></script>
-
-    <style>
-        nav #about {
-            background-color: rgb(134, 150, 43);
-        }
-    </style>
-</head>
-<body>
-    <div id="nav-placeholder"></div>
+<body th:class="${page}">
+    <div th:replace="~{fragments/nav :: nav}"></div>
 
     <main>
         <h1>About us</h1>
@@ -33,6 +24,6 @@
 
 
     <br>
-    <div id="footer-placeholder"></div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
