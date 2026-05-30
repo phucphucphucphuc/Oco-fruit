@@ -1,0 +1,61 @@
+
+.about h1 {
+    color: white;
+    text-shadow:
+    2px 2px 0 rgb(156, 175, 50),
+    -2px -2px 0 rgb(156, 175, 50),
+    2px -2px 0 rgb(156, 175, 50),
+    -2px 2px 0 rgb(156, 175, 50);
+}
+
+.about .text {
+    width: 50vw;
+}
+
+.about .text a {
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+}
+
+.about .text .shopee {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.about .text .shopee * {
+   width: 45%;
+}
+
+.about .text .shopee a:hover {
+    border-color: rgb(107, 139, 52);
+    filter: brightness(80%);
+    transition: border-color 0.25s, filter 0.25s;
+    cursor: pointer;
+}
+
+.about .video {
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.about .section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.about #rotatingImage {
+    width: 40%;
+    display: block;
+    width: 100%; 
+    border-radius: 30px; 
+    border: 10px solid rgb(117, 145, 69);
+}
+
+.about .img-transition {
+    opacity: 0.5;
+}

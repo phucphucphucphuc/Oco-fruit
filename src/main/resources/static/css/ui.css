@@ -212,3 +212,6 @@ footer iframe {
     border: 10px solid rgb(181, 223, 108);
 }
 
+footer .logo {
+    width: 100%;
+}
