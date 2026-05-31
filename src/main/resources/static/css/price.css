@@ -1,0 +1,33 @@
+/* --------------------------------------PRICE-------------------------------- */
+
+.price h1 {
+    color: white;
+    text-shadow:
+    2px 2px 0 rgb(156, 175, 50),
+    -2px -2px 0 rgb(156, 175, 50),
+    2px -2px 0 rgb(156, 175, 50),
+    -2px 2px 0 rgb(156, 175, 50);
+}
+
+.bigbox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    justify-content: center;
+}
+
+.bigbox h1{ 
+    margin-bottom: 0;
+}
+
+.bigbox h3 { 
+    margin: 0;
+}
+
+.bigbox img {
+    width: 90%;
+    align-self: center;
+    border: 10px solid rgb(117, 145, 69);
+}
