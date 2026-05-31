@@ -106,12 +106,14 @@
     width: 18px;
     height: 18px;
     cursor: pointer;
+    display: none;
 }
 
 .payment-option-content {
     background-color: rgb(181, 223, 108);
     border-radius: 12px;
     padding: 14px 18px;
+
     display: flex;
     align-items: center;
     gap: 14px;
@@ -120,7 +122,8 @@
 }
 
 .payment-option input:checked + .payment-option-content {
-    box-shadow: 0 0 0 3px white;
+    box-shadow: 0 0 0 3px rgb(65, 83, 34);
+    background-color: rgb(145, 179, 87);
 }
 
 .payment-icon {
