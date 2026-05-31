@@ -17,14 +17,10 @@ public class UserService {
 
     public User register(String username, String email, String password) {
         if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Username đã tồn tại!");
-        }
-        if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email đã tồn tại!");
             throw new RuntimeException("Username already existed!");
         }
         if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email already existed!");
+            throw new RuntimeException("Username already existed!");
         }
 
         User user = new User();

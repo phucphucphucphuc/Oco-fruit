@@ -20,24 +20,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy user: " + username));
 
-        
-            // DEBUG
-    System.out.println("=== LOGIN DEBUG ===");
-    System.out.println("Username: " + user.getUsername());
-    System.out.println("Password hash: " + user.getPassword());
-    System.out.println("Role: " + user.getRole());
-    System.out.println("Enabled: " + user.getEnabled());
         return new org.springframework.security.core.userdetails.User(
             user.getUsername(),
             user.getPassword(),
-            user.getEnabled(),  // enabled
-            true,               // accountNonExpired
-            true,               // credentialsNonExpired
-            true,               // accountNonLocked
-
-        return new org.springframework.security.core.userdetails.User(
-            user.getUsername(),
-            user.getPassword(),
+            user.getEnabled(),
+            true,
+            true,
+            true,
             Collections.singletonList(new SimpleGrantedAuthority(user.getRole()))
         );
     }

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
     List<Product> findByNameContainingIgnoreCase(String name);
 
     List<Product> findByCategory(String category);
@@ -21,20 +22,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByPriceBetween(Double minPrice, Double maxPrice);
 
     @Query("SELECT p FROM Product p WHERE " +
-       "(:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
-       "(:category IS NULL OR p.category = :category) AND " +
-       "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
-       "(:maxPrice IS NULL OR p.price <= :maxPrice) AND " +
-       "p.active = true")
-List<Product> searchProducts(
-    @Param("name") String name,
-    @Param("category") String category,
-    @Param("minPrice") Double minPrice,
-    @Param("maxPrice") Double maxPrice
-);
-
-    long countByCategory(String category);
-
            "(:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
            "(:category IS NULL OR p.category = :category) AND " +
            "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
@@ -46,6 +33,6 @@ List<Product> searchProducts(
         @Param("minPrice") Double minPrice,
         @Param("maxPrice") Double maxPrice
     );
-    long countByCategory(String category);
 
+    long countByCategory(String category);
 }

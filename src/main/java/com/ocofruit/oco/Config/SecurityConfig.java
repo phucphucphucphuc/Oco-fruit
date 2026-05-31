@@ -45,8 +45,19 @@ public class SecurityConfig {
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/")  // về trang Home
                 .permitAll()
+            );
+
+        return http.build();
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder builder =
+            http.getSharedObject(AuthenticationManagerBuilder.class);
+        builder.userDetailsService(userDetailsService)
+               .passwordEncoder(passwordEncoder());
+        return builder.build();
+    }
+}
