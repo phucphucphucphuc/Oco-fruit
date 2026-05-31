@@ -36,12 +36,11 @@ public class Order {
     // Quan hệ 1 Order có nhiều OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> items;
-<<<<<<< HEAD
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-=======
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
+
 
     @PrePersist
     protected void onCreate() {
@@ -78,10 +77,8 @@ public class Order {
 
     public List<OrderItem> getItems() { return items; }
     public void setItems(List<OrderItem> items) { this.items = items; }
-<<<<<<< HEAD
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
-=======
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
+
 }

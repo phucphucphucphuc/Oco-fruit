@@ -38,7 +38,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkout")
-<<<<<<< HEAD
+
 public String placeOrder(
         @RequestParam String customerName,
         @RequestParam String email,
@@ -67,7 +67,7 @@ public String placeOrder(
         return "redirect:/checkout";
     }
 } }
-=======
+
     public String placeOrder(
             @RequestParam String customerName,
             @RequestParam String email,
@@ -98,4 +98,4 @@ public String placeOrder(
         }
     }
 }
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
+
