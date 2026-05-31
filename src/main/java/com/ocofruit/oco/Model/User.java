@@ -21,7 +21,14 @@ public class User {
     private String email;
 
     @Column(nullable = false, length = 20)
+<<<<<<< HEAD
+    private String role; // ROLE_USER, ROLE_STAFF, ROLE_ADMIN
+
+    @Column(nullable = false)
+    private Boolean deleted = false; // soft delete
+=======
     private String role; // ROLE_USER, ROLE_ADMIN
+>>>>>>> 130961b1d5aec426173659935509f03071d3702f
 
     @Column(nullable = false)
     private Boolean enabled = true;

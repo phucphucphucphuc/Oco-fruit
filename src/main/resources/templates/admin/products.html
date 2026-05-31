@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<body>
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<div style="max-width:1200px; margin:0 auto; padding:80px 20px 40px;">
+
+    <!-- Header -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px;">
+        <h1 style="color:rgb(80,100,20);">🛒 Manage Products & Categories</h1>
+        <a th:href="@{/admin/dashboard}" style="color:rgb(156,175,50); font-weight:600; text-decoration:none;">← Dashboard</a>
+    </div>
+
+    <!-- Alerts -->
+    <div th:if="${success}" style="background:#d1fae5; color:#065f46; padding:12px 16px; border-radius:8px; margin-bottom:16px;" th:text="${success}"></div>
+    <div th:if="${error}" style="background:#fee2e2; color:#991b1b; padding:12px 16px; border-radius:8px; margin-bottom:16px;" th:text="${error}"></div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:32px;">
+
+        <!-- Add Product Form -->
+        <div style="background:white; border-radius:16px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+            <h2 style="color:rgb(156,175,50); font-size:1.1rem; margin-bottom:20px;">➕ Add New Product</h2>
+            <form th:action="@{/admin/products/add}" method="post" enctype="multipart/form-data"
+                  style="display:flex; flex-direction:column; gap:14px;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <label style="font-size:0.85rem; font-weight:600; color:#555;">Product Name *</label>
+                    <input type="text" name="name" placeholder="e.g. XOÀI" required
+                           style="padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem;"/>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <label style="font-size:0.85rem; font-weight:600; color:#555;">Description</label>
+                    <input type="text" name="description" placeholder="Brief description"
+                           style="padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem;"/>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <label style="font-size:0.85rem; font-weight:600; color:#555;">Price (đ) *</label>
+                        <input type="number" name="price" placeholder="35000" required min="0"
+                               style="padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem;"/>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <label style="font-size:0.85rem; font-weight:600; color:#555;">Quantity *</label>
+                        <input type="number" name="quantity" placeholder="100" required min="0"
+                               style="padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem;"/>
+                    </div>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <label style="font-size:0.85rem; font-weight:600; color:#555;">Category</label>
+                    <select name="categoryId"
+                            style="padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem;">
+                        <option value="">-- No Category --</option>
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}"></option>
+                    </select>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <label style="font-size:0.85rem; font-weight:600; color:#555;">Product Image</label>
+                    <input type="file" name="imageFile" accept="image/*" id="imageInput"
+                           onchange="previewImage(event)"
+                           style="padding:8px; border:1px solid #ddd; border-radius:8px; font-size:0.9rem;"/>
+                    <img id="imagePreview" src="#" alt="Preview"
+                         style="display:none; width:100%; max-height:150px; object-fit:cover; border-radius:8px; margin-top:8px;"/>
+                </div>
+
+                <button type="submit"
+                        style="background:rgb(156,175,50); color:white; border:none; padding:12px; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer; margin-top:4px;">
+                    Add Product
+                </button>
+            </form>
+        </div>
+
+        <!-- Add Category Form -->
+        <div style="background:white; border-radius:16px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+            <h2 style="color:rgb(156,175,50); font-size:1.1rem; margin-bottom:20px;">🏷️ Manage Categories</h2>
+
+            <!-- Add category -->
+            <form th:action="@{/admin/categories/add}" method="post"
+                  style="display:flex; gap:10px; margin-bottom:20px;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <input type="text" name="name" placeholder="Category name" required
+                       style="flex:1; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.9rem;"/>
+                <input type="text" name="description" placeholder="Description"
+                       style="flex:1.5; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.9rem;"/>
+                <button type="submit"
+                        style="background:rgb(156,175,50); color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; font-weight:600; white-space:nowrap;">
+                    + Add
+                </button>
+            </form>
+
+            <!-- Category list -->
+            <div style="max-height:360px; overflow-y:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+                    <thead>
+                        <tr style="background:#f9fafb; position:sticky; top:0;">
+                            <th style="padding:10px 12px; text-align:left; border-bottom:2px solid #e5e7eb;">Name</th>
+                            <th style="padding:10px 12px; text-align:left; border-bottom:2px solid #e5e7eb;">Description</th>
+                            <th style="padding:10px 12px; text-align:center; border-bottom:2px solid #e5e7eb;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="cat : ${categories}" style="border-bottom:1px solid #f3f4f6;">
+                            <td style="padding:10px 12px; font-weight:600;" th:text="${cat.name}"></td>
+                            <td style="padding:10px 12px; color:#666;" th:text="${cat.description}"></td>
+                            <td style="padding:10px 12px; text-align:center;">
+                                <form th:action="@{/admin/categories/{id}/delete(id=${cat.id})}" method="post"
+                                      onsubmit="return confirm('Delete this category?')">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit"
+                                            style="background:#fee2e2; color:#991b1b; border:none; padding:4px 12px; border-radius:6px; cursor:pointer; font-size:0.85rem;">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(categories)}">
+                            <td colspan="3" style="padding:20px; text-align:center; color:#aaa;">No categories yet.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product List -->
+    <div style="background:white; border-radius:16px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        <h2 style="color:rgb(156,175,50); font-size:1.1rem; margin-bottom:16px;">
+            📋 All Products
+            <span style="background:rgb(156,175,50); color:white; font-size:0.75rem; padding:2px 10px; border-radius:20px; margin-left:8px;"
+                  th:text="${#lists.size(products)}"></span>
+        </h2>
+        <table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
+            <thead>
+                <tr style="background:#f9fafb;">
+                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e5e7eb;">Image</th>
+                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e5e7eb;">Name</th>
+                    <th style="padding:12px; text-align:left; border-bottom:2px solid #e5e7eb;">Category</th>
+                    <th style="padding:12px; text-align:right; border-bottom:2px solid #e5e7eb;">Price</th>
+                    <th style="padding:12px; text-align:center; border-bottom:2px solid #e5e7eb;">Qty</th>
+                    <th style="padding:12px; text-align:center; border-bottom:2px solid #e5e7eb;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+    <tr th:each="p : ${products}" style="border-bottom:1px solid #f3f4f6;">
+        <td style="padding:12px;">
+            <img th:src="${p.imageUrl}" th:alt="${p.name}"
+                 style="width:60px; height:60px; object-fit:cover; border-radius:8px; background:#f0f0f0;"
+                 onerror="this.src='/assets/logo-small-nobg.png'"/>
+        </td>
+        <td style="padding:12px; font-weight:700;" th:text="${p.name}"></td>
+        <td style="padding:12px; color:#888;" th:text="${p.category}"></td>
+        <td style="padding:12px; text-align:right; font-weight:600; color:rgb(156,175,50);"
+            th:text="${#numbers.formatInteger(p.price,0,'COMMA')} + ' đ'"></td>
+        <td style="padding:12px; text-align:center;" th:text="${p.quantity}"></td>
+        <td style="padding:12px; text-align:center;">
+            <div style="display:flex; gap:6px; justify-content:center;">
+                <!-- Edit button -->
+                <button type="button"
+        th:data-id="${p.id}"
+        th:data-name="${p.name}"
+        th:data-price="${p.price}"
+        th:data-qty="${p.quantity}"
+        onclick="openEditFromBtn(this)"
+        style="background:#dbeafe; color:#1e40af; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.8rem;">
+    ✏️ Edit
+</button>
+                <!-- Hide/Show -->
+                <form th:action="@{/admin/products/{id}/toggle(id=${p.id})}" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit"
+                            th:style="${p.active} ?
+                                'background:#fef3c7; color:#92400e; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.8rem;' :
+                                'background:#d1fae5; color:#065f46; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.8rem;'"
+                            th:text="${p.active} ? 'Hide' : 'Show'">
+                    </button>
+                </form>
+                <!-- Delete -->
+                <form th:action="@{/admin/products/{id}/delete(id=${p.id})}" method="post"
+                      onsubmit="return confirm('Delete this product?')">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit"
+                            style="background:#fee2e2; color:#991b1b; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.8rem;">
+                        🗑️
+                    </button>
+                </form>
+            </div>
+        </td>
+    </tr>
+</tbody>
+        </table>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script>
+function previewImage(event) {
+    const preview = document.getElementById('imagePreview');
+    const file = event.target.files[0];
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+    }
+}
+</script>
+    <!-- Edit Modal -->
+<div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:white; border-radius:16px; padding:32px; width:480px; max-width:90vw; box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+        <h2 style="color:rgb(156,175,50); margin-bottom:20px; font-size:1.2rem;">✏️ Edit Product</h2>
+        <form id="editForm" method="post" enctype="multipart/form-data"
+              style="display:flex; flex-direction:column; gap:14px;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <div>
+                <label style="font-size:0.85rem; font-weight:600; color:#555; display:block; margin-bottom:4px;">Product Name</label>
+                <input id="editName" type="text" disabled
+                       style="width:100%; padding:10px 12px; border:1px solid #eee; border-radius:8px; background:#f9f9f9; font-size:0.95rem; box-sizing:border-box;"/>
+            </div>
+
+            <div>
+                <label style="font-size:0.85rem; font-weight:600; color:#555; display:block; margin-bottom:4px;">Price (đ)</label>
+                <input id="editPrice" name="price" type="number" min="0" required
+                       style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem; box-sizing:border-box;"/>
+            </div>
+
+            <div>
+                <label style="font-size:0.85rem; font-weight:600; color:#555; display:block; margin-bottom:4px;">Quantity</label>
+                <input id="editQty" name="quantity" type="number" min="0" required
+                       style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem; box-sizing:border-box;"/>
+            </div>
+
+            <div>
+                <label style="font-size:0.85rem; font-weight:600; color:#555; display:block; margin-bottom:4px;">New Image (optional)</label>
+                <input type="file" name="imageFile" accept="image/*" id="editImageInput"
+                       onchange="previewEditImage(event)"
+                       style="padding:8px; border:1px solid #ddd; border-radius:8px; font-size:0.9rem; width:100%;"/>
+                <img id="editImagePreview" src="#" alt="Preview"
+                     style="display:none; width:100%; max-height:120px; object-fit:cover; border-radius:8px; margin-top:8px;"/>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:8px;">
+                <button type="submit"
+                        style="flex:1; background:rgb(156,175,50); color:white; border:none; padding:12px; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer;">
+                    💾 Save
+                </button>
+                <button type="button" onclick="closeEdit()"
+                        style="flex:1; background:#f3f4f6; color:#374151; border:none; padding:12px; border-radius:10px; font-size:1rem; font-weight:600; cursor:pointer;">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openEdit(id, name, price, qty) {
+    document.getElementById('editName').value = name;
+    document.getElementById('editPrice').value = price;
+    document.getElementById('editQty').value = qty;
+    document.getElementById('editForm').action = '/admin/products/' + id + '/edit';
+    document.getElementById('editImagePreview').style.display = 'none';
+    document.getElementById('editImageInput').value = '';
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+function closeEdit() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+function previewEditImage(event) {
+    const preview = document.getElementById('editImagePreview');
+    const file = event.target.files[0];
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+    }
+}
+
+// Đóng modal khi click ra ngoài
+document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeEdit();
+});
+</script>
+
+<!-- Edit Modal -->
+<div id="editModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:white; border-radius:16px; padding:32px; width:480px; max-width:90vw; box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+        <h2 style="color:rgb(156,175,50); margin-bottom:20px; font-size:1.2rem;">✏️ Edit Product</h2>
+        <form id="editForm" method="post" enctype="multipart/form-data"
+              style="display:flex; flex-direction:column; gap:14px;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <div>
+                <label style="font-size:0.85rem; font-weight:600; color:#555; display:block; margin-bottom:4px;">Product Name</label>
+                <input id="editName" type="text" disabled
+                       style="width:100%; padding:10px 12px; border:1px solid #eee; border-radius:8px; background:#f9f9f9; font-size:0.95rem; box-sizing:border-box;"/>
+            </div>
+            <div>
+                <label style="font-size:0.85rem; font-weight:600; color:#555; display:block; margin-bottom:4px;">Price (đ)</label>
+                <input id="editPrice" name="price" type="number" min="0" required
+                       style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem; box-sizing:border-box;"/>
+            </div>
+            <div>
+                <label style="font-size:0.85rem; font-weight:600; color:#555; display:block; margin-bottom:4px;">Quantity</label>
+                <input id="editQty" name="quantity" type="number" min="0" required
+                       style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem; box-sizing:border-box;"/>
+            </div>
+            <div>
+                <label style="font-size:0.85rem; font-weight:600; color:#555; display:block; margin-bottom:4px;">New Image (optional)</label>
+                <input type="file" name="imageFile" accept="image/*" id="editImageInput"
+                       onchange="previewEditImage(event)"
+                       style="padding:8px; border:1px solid #ddd; border-radius:8px; font-size:0.9rem; width:100%;"/>
+                <img id="editImagePreview" src="#" alt="Preview"
+                     style="display:none; width:100%; max-height:120px; object-fit:cover; border-radius:8px; margin-top:8px;"/>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:8px;">
+                <button type="submit"
+                        style="flex:1; background:rgb(156,175,50); color:white; border:none; padding:12px; border-radius:10px; font-size:1rem; font-weight:700; cursor:pointer;">
+                    Save
+                </button>
+                <button type="button" onclick="closeEdit()"
+                        style="flex:1; background:#f3f4f6; color:#374151; border:none; padding:12px; border-radius:10px; font-size:1rem; font-weight:600; cursor:pointer;">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openEditFromBtn(btn) {
+    const id    = btn.getAttribute('data-id');
+    const name  = btn.getAttribute('data-name');
+    const price = btn.getAttribute('data-price');
+    const qty   = btn.getAttribute('data-qty');
+
+    document.getElementById('editName').value  = name;
+    document.getElementById('editPrice').value = price;
+    document.getElementById('editQty').value   = qty;
+    document.getElementById('editForm').action = '/admin/products/' + id + '/edit';
+    document.getElementById('editImagePreview').style.display = 'none';
+    document.getElementById('editImageInput').value = '';
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+function closeEdit() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+function previewEditImage(event) {
+    const preview = document.getElementById('editImagePreview');
+    const file = event.target.files[0];
+    if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+    }
+}
+
+document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeEdit();
+});
+</script>
+</body>
+</html>

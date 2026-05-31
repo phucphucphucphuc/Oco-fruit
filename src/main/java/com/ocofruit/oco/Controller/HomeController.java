@@ -34,11 +34,4 @@ public class HomeController {
         model.addAttribute("products", productService.getAllProducts());        
         return "price";
     }
-
-    // @GetMapping("/order")
-    // public String order(Model model) {
-    //     model.addAttribute("title", "Oco Fruit - Order");
-    //     model.addAttribute("page", "order");
-    //     return "order";
-    // }
 }

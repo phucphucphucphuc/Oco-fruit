@@ -28,6 +28,23 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // Custom query - tìm kiếm nâng cao
     @Query("SELECT p FROM Product p WHERE " +
+<<<<<<< HEAD
+       "(:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
+       "(:category IS NULL OR p.category = :category) AND " +
+       "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
+       "(:maxPrice IS NULL OR p.price <= :maxPrice) AND " +
+       "p.active = true")
+List<Product> searchProducts(
+    @Param("name") String name,
+    @Param("category") String category,
+    @Param("minPrice") Double minPrice,
+    @Param("maxPrice") Double maxPrice
+);
+
+    // Đếm sản phẩm theo danh mục
+    long countByCategory(String category);
+    
+=======
            "(:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
            "(:category IS NULL OR p.category = :category) AND " +
            "(:minPrice IS NULL OR p.price >= :minPrice) AND " +
@@ -42,4 +59,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // Đếm sản phẩm theo danh mục
     long countByCategory(String category);
+>>>>>>> 130961b1d5aec426173659935509f03071d3702f
 }
