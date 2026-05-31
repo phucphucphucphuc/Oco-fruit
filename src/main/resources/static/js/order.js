@@ -1,45 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    const checkboxes = document.querySelectorAll('input[name="fruitIds"]');
     const limitNoti = document.getElementById('limitNoti');
     const limitNoti2 = document.getElementById('limitNoti2');
     const addCartBtn = document.getElementById('addCartBtn');
+    const purchaseBtn = document.getElementById('purchaseBtn');
+    const MAX = 3;
 
-    limitNoti2.textContent = `Choose 3!`;
-    limitNoti.textContent = `0/3 fruits selected`;
+    limitNoti2.textContent = `Choose ${MAX}!`;
+    limitNoti.textContent = `0/${MAX} fruits selected`;
 
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
-            
-            const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
 
-            if (checkedCount > 3) {
+            const checkedCount = document.querySelectorAll('input[name="fruitIds"]:checked').length;
+
+            if (checkedCount > MAX) {
                 this.checked = false;
-                limitNoti2.textContent = `You can only choose maximum 3 fruits!`;
-                limitNoti2.style.cssText = 'background-color: red;';
+                limitNoti2.textContent = `You can only choose maximum ${MAX} fruits!`;
+                limitNoti2.style.cssText = 'background-color: red; padding: 5px 10px; border-radius: 5px; color: white;';
             } else {
-                limitNoti.textContent = `${checkedCount}/3 fruits selected`;
+                limitNoti2.textContent = checkedCount > 0 ? `Choose ${MAX}!` : '';
+                limitNoti2.style.cssText = '';
+                limitNoti.textContent = `${checkedCount}/${MAX} fruits selected`;
             }
 
-            if (checkedCount === 3) {
-                addCartBtn.disabled = false;
-            } else {
-                addCartBtn.disabled = true;
-            }
+            // Add to Cart → chỉ cần >= 1
+            addCartBtn.disabled = checkedCount < 1;
 
+            // Purchase → vẫn cần đúng 3
+            purchaseBtn.disabled = checkedCount !== MAX;
         });
-    });
-
-    // Optional: Prevent form submit for demo
-    document.getElementById('fruitForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const checked = document.querySelectorAll('input[type="checkbox"]:checked');
-        
-        if (checked.length === 0) {
-            alert("Please select at least one fruit!");
-        } else {
-            alert(`Added to cart! You selected ${checked.length} fruit(s).`);
-            // send
-        }
     });
 });

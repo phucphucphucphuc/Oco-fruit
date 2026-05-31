@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+
+<body class="checkout">
+    <div th:replace="~{fragments/nav :: nav}"></div>
+
+    <main class="checkout-main">
+
+        <!-- LEFT: Thông tin khách hàng -->
+        <div class="checkout-left">
+            <h2>Customer Information</h2>
+
+            <form th:action="@{/checkout}" method="post" id="checkoutForm">
+
+                <div class="checkout-field">
+                    <label>Full Name</label>
+                    <input type="text" name="customerName" placeholder="Nguyen Van A" required>
+                </div>
+
+                <div class="checkout-field">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="email@example.com" required>
+                </div>
+
+                <div class="checkout-field">
+                    <label>Phone Number</label>
+                    <input type="tel" name="customerPhone" placeholder="+84..." required>
+                </div>
+
+                <div class="checkout-field">
+                    <label>Address</label>
+                    <input type="text" name="address" placeholder="House number, street name" required>
+                </div>
+
+                <div class="checkout-field">
+                    <label>Note</label>
+                    <textarea name="note" placeholder="Additional notes..."></textarea>
+                </div>
+
+                <!-- Payment method -->
+                <h3 class="checkout-section-title">Payment Method</h3>
+
+                <div class="payment-options">
+                    <label class="payment-option">
+                        <input type="radio" name="paymentMethod" value="COD" checked>
+                        <div class="payment-option-content">
+                            <div class="payment-icon">🚚</div>
+                            <div>
+                                <strong>Cash on Delivery (COD)</strong>
+                                <p>Pay in cash when receiving your order</p>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" name="paymentMethod" value="TRANSFER">
+                        <div class="payment-option-content">
+                            <div class="payment-icon">🏦</div>
+                            <div>
+                                <strong>Bank Transfer</strong>
+                                <p>Transfer to our bank account before delivery</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Delivery notes -->
+                <h3 class="checkout-section-title">Delivery Notes</h3>
+                <ul class="delivery-notes">
+                    <li>✔ Delivery in HCM only</li>
+                    <li>✔ Free delivery for orders from 2 boxes</li>
+                    <li>✔ Orders which is over 4 boxes will receive 1 small random fruit box</li>
+                </ul>
+
+                <button type="submit" class="btn-place-order">Place Order</button>
+            </form>
+        </div>
+
+        <!-- RIGHT: Tóm tắt đơn hàng -->
+        <div class="checkout-right">
+            <h2>Order Summary</h2>
+
+            <div class="checkout-summary-box">
+
+                <!-- Header -->
+                <div class="checkout-summary-header">
+                    <span>Product</span>
+                    <span>Qty</span>
+                    <span>Price</span>
+                    <span>Total</span>
+                </div>
+
+                <!-- Danh sách hộp -->
+                <div th:each="box, boxStat : ${boxes}" class="checkout-summary-box-row">
+                    <div class="checkout-box-label">
+                        🧺 Box <span th:text="${boxStat.index + 1}"></span>
+                    </div>
+                    <div th:each="item : ${box}" class="checkout-item-row">
+                        <div class="checkout-item-name">
+                            <img th:src="${item.product.imageUrl}" th:alt="${item.product.name}">
+                            <span th:text="${item.product.name}"></span>
+                        </div>
+                        <span>1</span>
+                        <span th:text="${#numbers.formatDecimal(item.product.price,0,'COMMA',0,'POINT')} + 'đ'"></span>
+                        <span th:text="${#numbers.formatDecimal(item.product.price,0,'COMMA',0,'POINT')} + 'đ'"></span>
+                    </div>
+                </div>
+
+                <!-- Tổng -->
+                <div class="checkout-total">
+                    <span>Total</span>
+                    <strong th:text="${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} + ' đ'"></strong>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

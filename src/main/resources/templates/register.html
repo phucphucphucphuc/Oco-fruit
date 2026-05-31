@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<body class="register">
+    <div th:replace="~{fragments/nav :: nav}"></div>
+
+    <main class="auth-main">
+        <div class="auth-box">
+            <h2>Register</h2>
+
+            <div th:if="${error}" class="auth-alert auth-alert-error">
+                <p th:text="${error}"></p>
+            </div>
+            <div th:if="${success}" class="auth-alert auth-alert-success">
+                <p th:text="${success}"></p>
+            </div>
+
+            <form th:action="@{/register}" method="post" id="registerForm">
+                <div class="auth-field">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Username" required>
+                </div>
+                <div class="auth-field">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="auth-field">
+                    <label>Password</label>
+                    <input type="password" name="password" id="password"
+                           placeholder="Password" required>
+                </div>
+                <div class="auth-field">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword"
+                           placeholder="Confirm Password" required>
+                    <span class="password-hint" id="passwordHint"></span>
+                </div>
+
+                <!-- reCAPTCHA -->
+                <div class="recaptcha-wrap">
+                    <div class="g-recaptcha"
+                         data-sitekey="6LdKWgUtAAAAAMzbn4CpjuKXvM5m2dsBrTW0lJKQ">
+                    </div>
+                </div>
+
+                <button type="submit" class="auth-btn" id="registerBtn">Register</button>
+            </form>
+
+            <p class="auth-link">Already have an account? <a th:href="@{/login}">Login</a></p>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <script>
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const hint = document.getElementById('passwordHint');
+        const btn = document.getElementById('registerBtn');
+        const form = document.getElementById('registerForm');
+
+        function checkPasswords() {
+            const val = confirmPassword.value;
+            if (val === '') {
+                hint.textContent = '';
+                hint.className = 'password-hint';
+                btn.disabled = false;
+                return;
+            }
+            if (password.value === val) {
+                hint.textContent = '✔ Passwords match';
+                hint.className = 'password-hint match';
+                btn.disabled = false;
+            } else {
+                hint.textContent = '✖ Passwords do not match';
+                hint.className = 'password-hint no-match';
+                btn.disabled = true;
+            }
+        }
+
+        confirmPassword.addEventListener('input', checkPasswords);
+        password.addEventListener('input', checkPasswords);
+
+        form.addEventListener('submit', function(e) {
+            if (password.value !== confirmPassword.value) {
+                e.preventDefault();
+                hint.textContent = '✖ Passwords do not match';
+                hint.className = 'password-hint no-match';
+            }
+        });
+    </script>
+</body>
+</html>
