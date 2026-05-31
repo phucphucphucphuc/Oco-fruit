@@ -16,9 +16,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByOrderByOrderDateDesc();
     List<Order> findByUserOrderByOrderDateDesc(User user);
     long countByStatus(String status);
+    List<Order> findByUser(User user);
 
 @Query("SELECT COALESCE(SUM(o.totalPrice), 0) FROM Order o WHERE o.status = 'DELIVERED'")
 double sumRevenue();
 
 List<Order> findTop10ByOrderByOrderDateDesc();
+    
 }

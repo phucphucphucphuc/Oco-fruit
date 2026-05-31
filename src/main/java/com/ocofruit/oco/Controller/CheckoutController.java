@@ -38,33 +38,31 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkout")
-    public String placeOrder(
-            @RequestParam String customerName,
-            @RequestParam String email,
-            @RequestParam String customerPhone,
-            @RequestParam String address,
-            @RequestParam(required = false) String note,
-            @RequestParam String paymentMethod,
-            Authentication auth,
-            RedirectAttributes redirectAttributes) {
+public String placeOrder(
+        @RequestParam String customerName,
+        @RequestParam String email,
+        @RequestParam String customerPhone,
+        @RequestParam String address,
+        @RequestParam(required = false) String note,
+        @RequestParam String paymentMethod,
+        Authentication auth,
+        RedirectAttributes redirectAttributes) {
+    try {
+        String username = auth.getName();
+        List<CartItem> items = cartService.getCartItems(username);
+        List<Long> fruitIds = items.stream()
+            .map(item -> item.getProduct().getId())
+            .collect(Collectors.toList());
 
-        try {
-            String username = auth.getName();
-            List<CartItem> items = cartService.getCartItems(username);
-            List<Long> fruitIds = items.stream()
-                .map(item -> item.getProduct().getId())
-                .collect(Collectors.toList());
+        // Truyền thêm username
+        Order order = orderService.createOrder(customerName, customerPhone, address, fruitIds, username);
+        cartService.clearCart(username);
 
-            Order order = orderService.createOrder(customerName, customerPhone, address, fruitIds);
-            cartService.clearCart(username);
-
-            redirectAttributes.addFlashAttribute("success",
-                "Order placed successfully! Order ID: #" + order.getId());
-            return "redirect:/order-success/" + order.getId();
-
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-            return "redirect:/checkout";
-        }
+        redirectAttributes.addFlashAttribute("success",
+            "Order placed successfully! Order ID: #" + order.getId());
+        return "redirect:/order-success/" + order.getId();
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("error", e.getMessage());
+        return "redirect:/checkout";
     }
-}
+} }
