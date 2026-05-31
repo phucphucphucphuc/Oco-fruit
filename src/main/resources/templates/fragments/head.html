@@ -5,10 +5,11 @@
     
     <!-- global css -->
     <link rel="stylesheet" th:href="@{/css/ui.css}">
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
     
     <!-- pages css -->
     <link rel="stylesheet" th:href="@{/css/home.css}" th:if="${page == 'home'}">
+    <link rel="stylesheet" th:href="@{/css/about.css}" th:if="${page == 'about'}">
+    <link rel="stylesheet" th:href="@{/css/price.css}" th:if="${page == 'price'}">
     <link rel="stylesheet" th:href="@{/css/order.css}" th:if="${page == 'order'}">
 
     <!-- icon -->

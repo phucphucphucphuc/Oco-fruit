@@ -263,6 +263,7 @@ footer iframe {
     border: 10px solid rgb(181, 223, 108);
 }
 
+<<<<<<< HEAD
 /* ------------------------------------------ AUTH PAGE ------------------------------------------ */
 .auth-main {
     display: flex;
@@ -1058,4 +1059,8 @@ footer iframe {
 .checkout-total strong {
     color: rgb(181, 223, 108);
     font-size: 18px;
+=======
+footer .logo {
+    width: 100%;
+>>>>>>> 130961b1d5aec426173659935509f03071d3702f
 }

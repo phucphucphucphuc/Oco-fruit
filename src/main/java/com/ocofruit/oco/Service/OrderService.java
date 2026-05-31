@@ -5,8 +5,11 @@ import com.ocofruit.oco.Model.OrderItem;
 import com.ocofruit.oco.Model.Product;
 import com.ocofruit.oco.Repository.OrderRepository;
 import com.ocofruit.oco.Repository.ProductRepository;
+<<<<<<< HEAD
 import com.ocofruit.oco.Repository.UserRepository;
 
+=======
+>>>>>>> 130961b1d5aec426173659935509f03071d3702f
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +63,7 @@ public class OrderService {
         return orderRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng ID: " + id));
     }
+<<<<<<< HEAD
     @Autowired
 private UserRepository userRepository;
 
@@ -89,4 +93,6 @@ public Order createOrder(String customerName, String customerPhone,
     savedOrder.setTotalPrice(total);
     return orderRepository.save(savedOrder);
 }
+=======
+>>>>>>> 130961b1d5aec426173659935509f03071d3702f
 }

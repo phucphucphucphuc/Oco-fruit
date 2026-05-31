@@ -38,6 +38,7 @@ public class CheckoutController {
     }
 
     @PostMapping("/checkout")
+<<<<<<< HEAD
 public String placeOrder(
         @RequestParam String customerName,
         @RequestParam String email,
@@ -66,3 +67,35 @@ public String placeOrder(
         return "redirect:/checkout";
     }
 } }
+=======
+    public String placeOrder(
+            @RequestParam String customerName,
+            @RequestParam String email,
+            @RequestParam String customerPhone,
+            @RequestParam String address,
+            @RequestParam(required = false) String note,
+            @RequestParam String paymentMethod,
+            Authentication auth,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            String username = auth.getName();
+            List<CartItem> items = cartService.getCartItems(username);
+            List<Long> fruitIds = items.stream()
+                .map(item -> item.getProduct().getId())
+                .collect(Collectors.toList());
+
+            Order order = orderService.createOrder(customerName, customerPhone, address, fruitIds);
+            cartService.clearCart(username);
+
+            redirectAttributes.addFlashAttribute("success",
+                "Order placed successfully! Order ID: #" + order.getId());
+            return "redirect:/order-success/" + order.getId();
+
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            return "redirect:/checkout";
+        }
+    }
+}
+>>>>>>> 130961b1d5aec426173659935509f03071d3702f
