@@ -130,8 +130,228 @@ nav a:hover {
     background-color: rgb(134, 150, 43);
 } */
 
+/* ===-----------------------------------== NAV AUTH ===----------------------------------------------------------== */
+.nav-auth {
+    position: absolute;  /* đẩy ra góc phải */
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-/* ------------------------------------------MAIN------------------------------------------ */
+.nav-auth span {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-login,
+.btn-register,
+.btn-logout,
+.btn-admin {
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.btn-login {
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-register {
+    background-color: white;
+    color: #6b7c2e;
+}
+
+.btn-logout {
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-admin {
+    background-color: #ff9800;
+    color: white;
+}
+
+.btn-login:hover,
+.btn-register:hover,
+.btn-logout:hover,
+.btn-admin:hover {
+    opacity: 0.8;
+}
+
+
+/* =------------------------------------------------==== NAV USER ==-------------------------------------------=== */
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Giỏ hàng */
+.nav-cart {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+.nav-cart:hover {
+    opacity: 1;
+}
+
+/* pfp */
+.nav-avatar-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: background-color 0.2s;
+}
+
+.nav-avatar-wrap:hover {
+    background-color: rgba(255,255,255,0.15);
+}
+
+.nav-avatar {
+    width: 32px;
+    height: 32px;
+
+    background-color: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+.nav-username {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.nav-avatar-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    padding: 4px 8px;
+    transition: background-color 0.2s;
+}
+
+.nav-avatar-wrap:hover {
+    background-color: rgba(255,255,255,0.15);
+}
+
+.nav-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+
+    box-shadow: 0 4px 5px rgba(0,0,0,0.6);
+    background-color: rgb(134, 150, 43);
+
+    
+    min-width: 200px;
+    overflow: hidden;
+    z-index: 9999;
+    flex-direction: column;
+}
+
+.nav-dropdown a {
+    color: white;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.15s;
+}
+
+.nav-dropdown a:hover {
+    background-color: rgb(104, 117, 33);
+    color: white;
+}
+
+.nav-dropdown-divider {
+    height: 1px;
+    background-color: rgba(255,255,255,0.3);
+}
+
+.dropdown-logout-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 16px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+
+    font-family: 'DM-Sans', sans-serif;
+    transition: background-color 0.15s;
+    text-align: left;
+}
+
+.dropdown-logout-btn:hover {
+    background-color: rgb(104, 117, 33);
+}
+.dropdown-logout:hover {
+    background-color: rgb(104, 117, 33) !important;
+    color: white !important;
+}
+
+.nav-avatar-wrap:hover .nav-dropdown {
+    display: flex;
+}
+
+/* ===== CART BADGE ===== */
+.cart-icon-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cart-badge {
+    position: absolute;   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+}
+
+
+/* ------------------------------------------MAIN----------------------------------------------------------------- */
 main {
     min-height: 800px;
     padding: 70px 40px 10px 40px;
@@ -140,7 +360,7 @@ main {
 }
 
 
-/* ------------------------------------------FOOTER------------------------------------------ */
+/* ------------------------------------------FOOTER------------------------------------------------------------------- */
 footer {
     background-color: rgb(156, 175, 50);
     box-shadow: 0px 0px 5px 0 black;
@@ -214,4 +434,148 @@ footer iframe {
 
 footer .logo {
     width: 100%;
+}
+
+/* ==--------------------------------=== RECAPTCHA ==--------------------------------------=== */
+.recaptcha-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+/* ==----------------------------=== CONFIRM PASSWORD ===-----------------------------== */
+.password-hint {
+    font-size: 13px;
+    margin-top: 4px;
+    display: block;
+}
+
+.password-hint.match {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.password-hint.no-match {
+    color: #e53935;
+    font-weight: bold;
+}
+
+
+/* ------------------------------------------ AUTH PAGE ------------------------------------------ */
+.auth-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.auth-box {
+    background-color: rgb(156, 175, 50);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    
+    padding: 50px 60px;
+    width: 100%;
+    max-width: 460px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-box h2 {
+    font-family: 'Unbounded';
+    color: white;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.auth-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.auth-field label {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.auth-field input {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'DM-Sans', sans-serif;
+    background-color: rgb(181, 223, 108);
+    color: black;
+    outline: none;
+    transition: box-shadow 0.2s;
+}
+
+.auth-field input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.auth-field input:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(181, 223, 108);
+
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.auth-btn:hover {
+    background-color: white;
+    color: rgb(156, 175, 50);
+}
+
+.auth-link {
+    text-align: center;
+    color: white;
+    font-size: 14px;
+}
+
+.auth-link a {
+    color: rgb(181, 223, 108);
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+.auth-alert {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.auth-alert-error {
+    background-color: rgba(255, 0, 0, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.auth-alert-success {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }

@@ -1,4 +1,4 @@
-wpackage com.ocofruit.oco.Config;
+package com.ocofruit.oco.Config;
 
 import com.ocofruit.oco.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;

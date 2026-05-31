@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}"></head>
+<style>
+
+</style>
+<body>
+    <div th:replace="~{fragments/nav :: nav}"></div>
+
+    <main class="auth-main">
+
+        <div class="auth-box">
+            <h2>Order Placed!</h2>
+            <h5>Thank you, <strong th:text="${order.customerName}"></strong>!</h5>
+            <h5>Order ID: <strong th:text="'#' + ${order.id}"></strong></h5>
+            <h5>Total: <strong th:text="${#numbers.formatDecimal(order.totalPrice,0,'COMMA',0,'POINT')} + ' đ'"></strong></h5>
+            <p>We will contact you at <strong th:text="${order.customerPhone}"></strong> soon.</h5>
+            <a th:href="@{/}" class="auth-btn" style="text-decoration: none; display:block; text-align:center; margin-top:1rem;">Back to Home</a>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

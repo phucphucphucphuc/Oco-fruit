@@ -17,24 +17,19 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    // Trang cart
+    //  cart
     @GetMapping("/cart")
-public String cartPage(Authentication auth, Model model) {
-    String username = auth.getName();
-    List<List<CartItem>> boxes = cartService.getCartBoxes(username);
-    double total = cartService.getTotalPrice(username);
-    long completeBoxCount = cartService.countCompleteBoxes(username);
-    boolean hasIncompleteBox = cartService.hasIncompleteBox(username);
+    public String cartPage(Authentication auth, Model model) {
+        String username = auth.getName();
+        List<List<CartItem>> boxes = cartService.getCartBoxes(username);
+        double total = cartService.getTotalPrice(username);
 
-    model.addAttribute("boxes", boxes);
-    model.addAttribute("total", total);
-    model.addAttribute("completeBoxCount", completeBoxCount);
-    model.addAttribute("hasIncompleteBox", hasIncompleteBox);
-    model.addAttribute("page", "cart");
-    return "cart";
-}
+        model.addAttribute("boxes", boxes);
+        model.addAttribute("total", total);
+        model.addAttribute("page", "cart");
+        return "cart";
+    }
 
-    // Thêm vào cart từ trang order
     @PostMapping("/cart/add")
     public String addToCart(@RequestParam List<Long> fruitIds,
                             Authentication auth,
@@ -48,14 +43,24 @@ public String cartPage(Authentication auth, Model model) {
         return "redirect:/order";
     }
 
-    // Xóa item
+    @PostMapping("/cart/add-and-go")
+    public String addToCartAndGo(@RequestParam List<Long> fruitIds,
+                            Authentication auth,
+                            RedirectAttributes redirectAttributes) {
+        try {
+            cartService.addToCart(auth.getName(), fruitIds);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/cart";
+    }
+
     @PostMapping("/cart/remove/{id}")
     public String removeItem(@PathVariable Long id) {
         cartService.removeItem(id);
         return "redirect:/cart";
     }
 
-    // Xóa toàn bộ cart
     @PostMapping("/cart/clear")
     public String clearCart(Authentication auth) {
         cartService.clearCart(auth.getName());

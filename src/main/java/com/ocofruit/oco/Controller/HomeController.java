@@ -1,5 +1,7 @@
 package com.ocofruit.oco.Controller;
 
+import com.ocofruit.oco.Service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,10 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("title", "Oco Fruit - Home");
         model.addAttribute("page", "home");
+        model.addAttribute("products", productService.getAllProducts());
         return "index";
     }
 
@@ -24,14 +30,15 @@ public class HomeController {
     @GetMapping("/price")
     public String price(Model model) {
         model.addAttribute("title", "Oco Fruit - Price");
-        model.addAttribute("page", "price");        
+        model.addAttribute("page", "price");
+        model.addAttribute("products", productService.getAllProducts());        
         return "price";
     }
 
-    @GetMapping("/order")
-    public String order(Model model) {
-        model.addAttribute("title", "Oco Fruit - Order");
-        model.addAttribute("page", "order");
-        return "order";
-    }
+    // @GetMapping("/order")
+    // public String order(Model model) {
+    //     model.addAttribute("title", "Oco Fruit - Order");
+    //     model.addAttribute("page", "order");
+    //     return "order";
+    // }
 }
