@@ -1,15 +1,63 @@
-<!-- <nav>    
-    <img src="assets/logo-small-nobg.png">
-    <a href="index.html" id="home">Home</a>
-    <a href="about.html" id="about">About</a>
-    <a href="price.html" id="price">Price</a>
-    <a href="order.html" id="order">Order</a>
-</nav> -->
-
-<nav th:fragment="nav">
+<nav th:fragment="nav" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <img src="/assets/logo-small-nobg.png" alt="logo">
     <a th:href="@{/}" id="home">Home</a>
     <a th:href="@{/about}" id="about">About</a>
     <a th:href="@{/price}" id="price">Price</a>
     <a th:href="@{/order}" id="order">Order</a>
+
+    <div class="nav-auth">
+        <!-- Chưa đăng nhập -->
+        <div sec:authorize="isAnonymous()" class="nav-guest">
+            <a th:href="@{/login}" class="btn-login">Login</a>
+            <a th:href="@{/register}" class="btn-register">Register</a>
+        </div>
+
+        <!-- Đã đăng nhập -->
+        <div sec:authorize="isAuthenticated()" class="nav-user">
+
+            <!-- Xe đẩy hàng + badge -->
+            <a th:href="@{/cart}" class="nav-cart" title="Giỏ hàng">
+                <div class="cart-icon-wrap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none"
+                        viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
+                    </svg>
+                    <span class="cart-badge" th:if="${cartCount != null and cartCount > 0}"
+                        th:text="${cartCount}"></span>
+                </div>
+            </a>
+
+            <!-- Avatar + tên + dropdown -->
+            <div class="nav-avatar-wrap" id="avatarWrap">
+                <div class="nav-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24">
+                        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                    </svg>
+                </div>
+                <span sec:authentication="name" class="nav-username"></span>
+
+                <!-- Dropdown -->
+                <div class="nav-dropdown" id="navDropdown">
+                    <a th:href="@{/profile}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                        </svg>
+                        My Account
+                    </a>
+                    <div class="nav-dropdown-divider"></div>
+                    <form th:action="@{/logout}" method="post" style="margin:0; padding:0;">
+    <button type="submit" class="dropdown-logout dropdown-logout-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+        </svg>
+        Logout
+    </button>
+</form>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </nav>
+

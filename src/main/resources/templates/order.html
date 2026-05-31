@@ -1,102 +1,132 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head}"></head>
+<style>
+    /* ===== ORDER PAGE ===== */
+    .fruit-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .fruit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        padding: 15px;
+        border: 2px solid transparent;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+
+    .fruit:hover {
+        border-color: #ccc;
+        background-color: #f9f9f9;
+    }
+
+    .fruit input[type="checkbox"] {
+        display: none;
+    }
+
+    .fruit input[type="checkbox"]:checked + img {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 3px #4CAF5055;
+    }
+
+    .fruit input[type="checkbox"]:checked ~ strong {
+        color: #4CAF50;
+    }
+
+    .fruit:has(input:checked) {
+        border-color: #4CAF50;
+        background-color: #f0fff0;
+    }
+
+    .fruit img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        transition: all 0.2s ease;
+    }
+
+    .fruit strong {
+        margin-top: 10px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .fruit span {
+        font-size: 13px;
+        color: #888;
+        margin-top: 4px;
+    }
+
+    @media (max-width: 900px) {
+        .fruit-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+        .fruit-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+</style>
 
 <body th:class="${page}">
     <div th:replace="~{fragments/nav :: nav}"></div>
-    
+
     <main class="order">
         <h1>Menu</h1>
         <h3>Build your fruit box!</h3>
-        
-        <form>
-            <label for="xoai" class="fruit">
-                <input type="checkbox" name="fruit" value="xoai" id="xoai">
-                <img src="/assets/order/xoai.jpg">
-                <strong>XOÀI</strong>
-            </label>
 
-            <label for="coc" class="fruit">
-                <input type="checkbox" name="fruit" value="coc" id="coc">
-                <img src="/assets/order/coc.jpg">
-                <strong>CÓC</strong>
-            </label>
-        
-            <label for="oi" class="fruit">
-                 <input type="checkbox" name="fruit" value="oi" id="oi">
-                <img src="/assets/order/oi.jpg">
-                <strong>ỔI</strong>
-            </label>
+        <!-- Thông báo -->
+        <div th:if="${error}" class="alert alert-error">
+            <p th:text="${error}"></p>
+        </div>
+        <div th:if="${success}" class="alert alert-success">
+            <p th:text="${success}"></p>
+        </div>
 
-            <label for="cusan" class="fruit">
-                <input type="checkbox" name="fruit" value="cusan" id="cusan">
-                <img src="/assets/order/cusan.jpg">
-                <strong>CỦ SẮN</strong>
-            </label>
+        <!-- Form Purchase (POST /order) -->
+        <form th:action="@{/order}" method="post" id="fruitForm">
 
-            
-            <label for="buoi" class="fruit">
-                <input type="checkbox" name="fruit" value="buoi" id="buoi">
-                <img src="/assets/order/buoi.jpg">
-                <strong>BƯỞI</strong>
-            </label>
+            <!-- Danh sách trái cây từ DB -->
+            <div class="fruit-grid">
+                <label th:each="p : ${products}"
+                       th:for="${p.id}" class="fruit">
+                    <input type="checkbox" name="fruitIds"
+                           th:value="${p.id}"
+                           th:id="${p.id}">
+                    <img th:src="${p.imageUrl}" th:alt="${p.name}">
+                    <strong th:text="${p.name}"></strong>
+                    <span th:text="${#numbers.formatDecimal(p.price,0,'COMMA',0,'POINT')} + ' đ/kg'"></span>
+                </label>
+            </div>
 
-            
-            <label for="dudu" class="fruit">
-                <input type="checkbox" name="fruit" value="dudu" id="dudu">
-                <img src="/assets/order/dudu.jpg">
-                <strong>ĐU ĐỦ</strong>
-            </label>
-
-            
-            <label for="thanhlong" class="fruit">
-                <input type="checkbox" name="fruit" value="thanhlong" id="thanhlong">
-                <img src="/assets/order/thanhlong.jpg">
-                <strong>THANH LONG</strong>
-            </label>
-
-            
-            <label for="duahau" class="fruit">
-                <input type="checkbox" name="fruit" value="duahau" id="duahau">
-                <img src="/assets/order/duahau.jpg">
-                <strong>DƯA HẤU</strong>
-            </label>
-
-            
-            <label for="dualuoi" class="fruit">
-                <input type="checkbox" name="fruit" value="dualuoi" id="dualuoi">
-                <img src="/assets/order/dualuoi.jpg">
-                <strong>DƯA LƯỚI</strong>
-            </label>
-
-            
-            <label for="mit" class="fruit">
-                <input type="checkbox" name="fruit" value="mit" id="mit">
-                <img src="/assets/order/mit.jpg">
-                <strong>MÍT</strong>
-            </label>
-
-            
-            <label for="thom" class="fruit">
-                <input type="checkbox" name="fruit" value="thom" id="thom">
-                <img src="/assets/order/thom.jpg">
-                <strong>THƠM</strong>
-            </label>
-            
             <h4 class="limitNoti" id="limitNoti"></h4>
             <h4 class="limitNoti2" id="limitNoti2"></h4>
 
-            
             <div class="cart">
-                <button type="submit" id="addCartBtn" class="addCartBtn" disabled>Add to Cart</button>
-                <button type="submit" id="addCartBtn" class="addCartBtn" disabled>Purchase</button>
+                <!-- Add to Cart → POST /cart/add -->
+                <button type="button" id="addCartBtn"
+                        class="addCartBtn" disabled
+                        onclick="submitToCart()">Add to Cart</button>
+                <!-- Purchase → POST /order -->
+                <button type="submit" id="purchaseBtn"
+                        class="addCartBtn" disabled>Purchase</button>
             </div>
         </form>
     </main>
-    
-
 
     <div th:replace="~{fragments/footer :: footer}"></div>
     <script th:src="@{/js/order.js}"></script>
+    <script>
+        function submitToCart() {
+            const form = document.getElementById('fruitForm');
+            form.action = '/cart/add';
+            form.submit();
+        }
+    </script>
 </body>
 </html>
