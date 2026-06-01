@@ -6,17 +6,23 @@
     <a th:href="@{/order}" id="order">Order</a>
 
     <div class="nav-auth">
-        <!-- Chưa đăng nhập -->
+    
+        <!-- guest -->
         <div sec:authorize="isAnonymous()" class="nav-guest">
             <a th:href="@{/login}" class="btn-login">Login</a>
             <a th:href="@{/register}" class="btn-register">Register</a>
         </div>
 
-        <!-- Đã đăng nhập -->
+        <!-- user -->
         <div sec:authorize="isAuthenticated()" class="nav-user">
+<<<<<<< HEAD
 
             <!-- Giỏ hàng -->
             <a th:href="@{/cart}" class="nav-cart" title="Giỏ hàng">
+=======
+            <!-- cart -->
+            <a th:href="@{/cart}" class="nav-cart">
+>>>>>>> b037fc030016486a73966ea62c5f69078b05aab3
                 <div class="cart-icon-wrap">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none"
                         viewBox="0 0 24 24" stroke="white" stroke-width="2">
@@ -27,8 +33,13 @@
                         th:text="${cartCount}"></span>
                 </div>
             </a>
+<<<<<<< HEAD
 
             <!-- Avatar + dropdown -->
+=======
+            
+            <!-- profile -->
+>>>>>>> b037fc030016486a73966ea62c5f69078b05aab3
             <div class="nav-avatar-wrap" id="avatarWrap">
                 <div class="nav-avatar">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24">
@@ -45,6 +56,7 @@
                         </svg>
                         My Account
                     </a>
+<<<<<<< HEAD
 
                     <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')"
                        style="color: #ff9800 !important;">
@@ -56,14 +68,13 @@
                         Admin Dashboard
                     </a>
 
+=======
+>>>>>>> b037fc030016486a73966ea62c5f69078b05aab3
                     <div class="nav-dropdown-divider"></div>
-
                     <form th:action="@{/logout}" method="post" style="margin:0; padding:0;">
                         <button type="submit" class="dropdown-logout dropdown-logout-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                             </svg>
                             Logout
                         </button>

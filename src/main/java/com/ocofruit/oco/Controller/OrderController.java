@@ -20,16 +20,20 @@ public class OrderController {
     @Autowired
     private ProductService productService;
 
-    // Trang order (GET)
+    // order (GET)
     @GetMapping("/order")
     public String orderPage(Model model) {
         model.addAttribute("title", "Oco Fruit - Order");
         model.addAttribute("page", "order");
-        model.addAttribute("products", productService.getAllProducts());
+
+        model.addAttribute("fruits", productService.getProductsByCategory("fruit"));
+        model.addAttribute("juices", productService.getProductsByCategory("juice"));
+        model.addAttribute("mixes", productService.getProductsByCategory("mix"));
+
         return "order";
     }
 
-    // Submit đơn hàng (POST)
+    // Submit (POST)
     @PostMapping("/order")
     public String submitOrder(
             @RequestParam String customerName,
@@ -50,12 +54,12 @@ public class OrderController {
         }
     }
 
-    // Trang xác nhận đơn hàng
-    @GetMapping("/order/success/{id}")
+    // order acp
+    @GetMapping("/order-success/{id}")
     public String orderSuccess(@PathVariable Long id, Model model) {
         Order order = orderService.getOrderById(id);
         model.addAttribute("order", order);
-        model.addAttribute("page", "order");
+        model.addAttribute("title", "Order Successful");
         return "order-success";
     }
 }

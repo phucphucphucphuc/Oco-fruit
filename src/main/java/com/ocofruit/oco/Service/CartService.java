@@ -32,31 +32,17 @@ public class CartService {
         return cartRepository.findByUsername(username);
     }
 
-    // Nhóm từng 3 item thành 1 hộp
     public List<List<CartItem>> getCartBoxes(String username) {
         List<CartItem> items = cartRepository.findByUsername(username);
         List<List<CartItem>> boxes = new ArrayList<>();
-
-        for (int i = 0; i < items.size(); i += 3) {
-            boxes.add(items.subList(i, Math.min(i + 3, items.size())));
+        for (CartItem item : items) {
+            boxes.add(Collections.singletonList(item));
         }
         return boxes;
     }
-            // Đếm hộp đầy đủ (đủ 3 trái)
-        public long countCompleteBoxes(String username) {
-            long total = cartRepository.countByUsername(username);
-            return total / 3;
-        }
-
-        // Kiểm tra có hộp chưa đủ không
-        public boolean hasIncompleteBox(String username) {
-            long total = cartRepository.countByUsername(username);
-            return total % 3 != 0;
-        }
 
     public long countBoxes(String username) {
-        long total = cartRepository.countByUsername(username);
-        return (long) Math.ceil((double) total / 3);
+        return cartRepository.countByUsername(username);
     }
 
     @Transactional

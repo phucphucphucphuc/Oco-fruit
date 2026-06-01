@@ -4,33 +4,19 @@
 
 <body class="cart">
     <div th:replace="~{fragments/nav :: nav}"></div>
-
+    
     <main class="cart-main">
         <h1>Your Cart</h1>
+        
 
         <div th:if="${boxes == null or boxes.isEmpty()}" class="cart-empty">
-            <p>Your cart is empty! <a th:href="@{/order}">Pick your fruits now</a></p>
+            <h3>Your cart is empty! <a th:href="@{/order}">Pick your fruits now</a></h3>
         </div>
 
         <div th:if="${boxes != null and !boxes.isEmpty()}" class="cart-content">
 
             <div class="cart-boxes">
-                <div th:each="box, boxStat : ${boxes}" class="cart-box"
-                     th:classappend="${#lists.size(box) < 3} ? ' cart-box-incomplete' : ''">
-
-                    <!-- Header -->
-                    <div class="cart-box-header">
-                        <span>🧺 Box <span th:text="${boxStat.index + 1}"></span></span>
-                        <span th:text="${#lists.size(box)} + ' / 3 fruits'"></span>
-                    </div>
-
-                    <!-- Warning nếu chưa đủ 3 -->
-                    <div th:if="${#lists.size(box) < 3}" class="cart-box-warning">
-                        ⚠️ This box needs
-                        <strong th:text="${3 - #lists.size(box)}"></strong>
-                        more fruit(s) to be complete.
-                        <a th:href="@{/order}">Add more →</a>
-                    </div>
+                <div th:each="box, boxStat : ${boxes}" class="cart-box">
 
                     <!-- Items -->
                     <div th:each="item : ${box}" class="cart-item">
@@ -43,32 +29,15 @@
                             <button type="submit" class="btn-remove">✕</button>
                         </form>
                     </div>
-
-                    <!-- Footer giá hộp -->
-                    <div class="cart-box-footer">
-                        <span>Box price:</span>
-                        <strong th:if="${#lists.size(box) == 3}"
-                                th:text="${#numbers.formatDecimal(
-                                    #aggregates.sum(box.![product.price]),
-                                    0,'COMMA',0,'POINT')} + ' đ'">
-                        </strong>
-                        <span th:if="${#lists.size(box) < 3}" class="incomplete-price">
-                            Incomplete box
-                        </span>
-                    </div>
+                    
                 </div>
             </div>
 
             <!-- Summary -->
             <div class="cart-summary">
                 <div class="cart-summary-row">
-                    <span>Number of boxes:</span>
-                    <span th:text="${completeBoxCount} + ' box(es)'"></span>
-                </div>
-
-                <!-- Warning tổng nếu có hộp chưa đủ -->
-                <div th:if="${hasIncompleteBox}" class="summary-warning">
-                    ⚠️ You have incomplete box(es). Please add more fruits before checking out.
+                    <span>Number of products:</span>
+                    <span th:text="${#lists.size(boxes)}"></span>
                 </div>
 
                 <div class="cart-summary-row total-row">
@@ -78,15 +47,13 @@
 
                 <div class="cart-actions">
                     <form th:action="@{/cart/clear}" method="post">
-                        <button type="submit" class="btn-clear">Erase all</button>
+                        <button type="submit" class="btn-clear">Remove all</button>
                     </form>
-                    <a th:href="@{/order}" class="btn-continue">+ Add more boxes</a>
-                    <!-- Disable checkout nếu có hộp chưa đủ -->
-                    <a th:if="${!hasIncompleteBox}" th:href="@{/checkout}" class="btn-checkout">Check Out</a>
-                    <button th:if="${hasIncompleteBox}" class="btn-checkout btn-checkout-disabled" disabled>
-                        Complete your boxes first
-                    </button>
+                    
+                    <a th:href="@{/order}" class="btn-continue">+ Add more</a>
+                    <a th:href="@{/checkout}" class="btn-checkout">Check Out</a>
                 </div>
+                
             </div>
         </div>
     </main>

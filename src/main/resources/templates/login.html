@@ -12,6 +12,7 @@
             <div th:if="${error}" class="auth-alert auth-alert-error">
                 <p th:text="${error}"></p>
             </div>
+
             <div th:if="${success}" class="auth-alert auth-alert-success">
                 <p th:text="${success}"></p>
             </div>
@@ -21,6 +22,8 @@
                     <label>Username</label>
                     <input type="text" name="username" placeholder="Tên đăng nhập" required>
                 </div>
+                <br>
+                
                 <div class="auth-field">
                     <label>Password</label>
                     <input type="password" name="password" placeholder="Mật khẩu" required>

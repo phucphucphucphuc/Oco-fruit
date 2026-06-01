@@ -31,7 +31,7 @@ public class HomeController {
     public String price(Model model) {
         model.addAttribute("title", "Oco Fruit - Price");
         model.addAttribute("page", "price");
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("products", productService.getAllProducts());        
         return "price";
     }
 }
