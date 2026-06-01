@@ -12,6 +12,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 100)
+    private String username;
+
     @Column(length = 200)
     private String customerName;
 
@@ -33,7 +36,6 @@ public class Order {
     @Column
     private LocalDateTime orderDate;
 
-    // Quan hệ 1 Order có nhiều OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> items;
 
@@ -48,10 +50,11 @@ public class Order {
         if (status == null) status = "PENDING";
     }
 
-    // ===== Constructors =====
     public Order() {}
 
-    // ===== Getters & Setters =====
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -80,5 +83,6 @@ public class Order {
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+
 
 }

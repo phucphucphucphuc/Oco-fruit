@@ -55,7 +55,7 @@ public class CheckoutController {
                 .map(item -> item.getProduct().getId())
                 .collect(Collectors.toList());
 
-            Order order = orderService.createOrder(customerName, customerPhone, address, fruitIds);
+            Order order = orderService.createOrder(customerName, customerPhone, address, fruitIds, username);
             cartService.clearCart(username);
 
             redirectAttributes.addFlashAttribute("success",

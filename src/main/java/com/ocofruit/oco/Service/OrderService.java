@@ -68,6 +68,7 @@ public class OrderService {
     public Order createOrder(String customerName, String customerPhone,
                             String address, List<Long> fruitIds, String username) {
         Order order = new Order();
+        order.setUsername(username);
         order.setCustomerName(customerName);
         order.setCustomerPhone(customerPhone);
         order.setAddress(address);

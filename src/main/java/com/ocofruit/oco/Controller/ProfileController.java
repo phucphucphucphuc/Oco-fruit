@@ -25,22 +25,21 @@ public class ProfileController {
     @Autowired private OrderRepository orderRepository;
     @Autowired private PasswordEncoder passwordEncoder;
 
-    // Xem profile
     @GetMapping
     public String viewProfile(Authentication auth, Model model) {
         User user = userRepository.findByUsername(auth.getName()).orElseThrow();
         UserProfile profile = userProfileRepository.findByUserId(user.getId())
-                .orElse(new UserProfile()); // trả về rỗng nếu chưa có
+                .orElse(new UserProfile());
 
-        List<Order> orders = orderRepository.findByUserOrderByOrderDateDesc(user);
+        List<Order> orders = orderRepository.findByUsernameOrderByOrderDateDesc(auth.getName());
 
+        model.addAttribute("page", "profile");
         model.addAttribute("user", user);
         model.addAttribute("profile", profile);
         model.addAttribute("orders", orders);
         return "profile";
     }
 
-    // Cập nhật profile
     @PostMapping("/update")
     public String updateProfile(@RequestParam String fullName,
                                 @RequestParam String phone,
@@ -57,11 +56,10 @@ public class ProfileController {
         profile.setAddress(address);
         userProfileRepository.save(profile);
 
-        redirectAttributes.addFlashAttribute("success", "Cập nhật thông tin thành công!");
+        redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
         return "redirect:/profile";
     }
 
-    // Đổi mật khẩu
     @PostMapping("/change-password")
     public String changePassword(@RequestParam String currentPassword,
                                  @RequestParam String newPassword,
@@ -71,22 +69,22 @@ public class ProfileController {
         User user = userRepository.findByUsername(auth.getName()).orElseThrow();
 
         if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
-            redirectAttributes.addFlashAttribute("error", "Mật khẩu hiện tại không đúng!");
+            redirectAttributes.addFlashAttribute("error", "Wrong password!");
             return "redirect:/profile";
         }
         if (!newPassword.equals(confirmPassword)) {
-            redirectAttributes.addFlashAttribute("error", "Mật khẩu mới không khớp!");
+            redirectAttributes.addFlashAttribute("error", "Password not match!");
             return "redirect:/profile";
         }
         if (newPassword.length() < 6) {
-            redirectAttributes.addFlashAttribute("error", "Mật khẩu tối thiểu 6 ký tự!");
+            redirectAttributes.addFlashAttribute("error", "At least 6 characters!");
             return "redirect:/profile";
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
 
-        redirectAttributes.addFlashAttribute("success", "Đổi mật khẩu thành công!");
+        redirectAttributes.addFlashAttribute("success", "Password changed successfully!");
         return "redirect:/profile";
     }
 }
