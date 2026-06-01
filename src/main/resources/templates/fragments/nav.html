@@ -1,8 +1,4 @@
 <nav th:fragment="nav" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<<<<<<< HEAD
-=======
-<nav th:fragment="nav">
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
     <img src="/assets/logo-small-nobg.png" alt="logo">
     <a th:href="@{/}" id="home">Home</a>
     <a th:href="@{/about}" id="about">About</a>
@@ -19,7 +15,7 @@
         <!-- Đã đăng nhập -->
         <div sec:authorize="isAuthenticated()" class="nav-user">
 
-            <!-- Xe đẩy hàng + badge -->
+            <!-- Giỏ hàng -->
             <a th:href="@{/cart}" class="nav-cart" title="Giỏ hàng">
                 <div class="cart-icon-wrap">
                     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none"
@@ -32,7 +28,7 @@
                 </div>
             </a>
 
-            <!-- Avatar + tên + dropdown -->
+            <!-- Avatar + dropdown -->
             <div class="nav-avatar-wrap" id="avatarWrap">
                 <div class="nav-avatar">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 24 24">
@@ -40,25 +36,18 @@
                     </svg>
                 </div>
                 <span sec:authentication="name" class="nav-username"></span>
-<<<<<<< HEAD
-                <!-- Dropdown -->
-                <div class="nav-dropdown" id="navDropdown">
-
-=======
 
                 <!-- Dropdown -->
                 <div class="nav-dropdown" id="navDropdown">
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
                     <a th:href="@{/profile}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
                         </svg>
                         My Account
                     </a>
-<<<<<<< HEAD
 
                     <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')"
-                    style="color: #ff9800 !important;">
+                       style="color: #ff9800 !important;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -79,26 +68,8 @@
                             Logout
                         </button>
                     </form>
-
                 </div>
             </div>
-
         </div>
-=======
-                    <div class="nav-dropdown-divider"></div>
-                    <form th:action="@{/logout}" method="post" style="margin:0; padding:0;">
-    <button type="submit" class="dropdown-logout dropdown-logout-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-        </svg>
-        Logout
-    </button>
-</form>
-                </div>
-            </div>
-
-0        </div>
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
     </div>
 </nav>
-

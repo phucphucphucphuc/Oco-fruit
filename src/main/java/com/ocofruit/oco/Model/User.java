@@ -21,14 +21,10 @@ public class User {
     private String email;
 
     @Column(nullable = false, length = 20)
-<<<<<<< HEAD
     private String role; // ROLE_USER, ROLE_STAFF, ROLE_ADMIN
 
     @Column(nullable = false)
-    private Boolean deleted = false; // soft delete
-=======
-    private String role; // ROLE_USER, ROLE_ADMIN
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
+    private Boolean deleted = false;
 
     @Column(nullable = false)
     private Boolean enabled = true;
@@ -42,10 +38,8 @@ public class User {
         if (role == null) role = "ROLE_USER";
     }
 
-    // ===== Constructors =====
     public User() {}
 
-    // ===== Getters & Setters =====
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -60,6 +54,9 @@ public class User {
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
+
+    public Boolean getDeleted() { return deleted; }
+    public void setDeleted(Boolean deleted) { this.deleted = deleted; }
 
     public Boolean getEnabled() { return enabled; }
     public void setEnabled(Boolean enabled) { this.enabled = enabled; }

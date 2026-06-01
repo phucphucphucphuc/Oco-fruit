@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 package com.ocofruit.oco.Config;
-=======
-wpackage com.ocofruit.oco.Config;
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
 
 import com.ocofruit.oco.Service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;

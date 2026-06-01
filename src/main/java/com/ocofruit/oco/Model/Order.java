@@ -28,20 +28,17 @@ public class Order {
     private Double totalPrice;
 
     @Column(length = 50)
-    private String status; // PENDING, CONFIRMED, DELIVERED, CANCELLED
+    private String status;
 
     @Column
     private LocalDateTime orderDate;
 
-    // Quan hệ 1 Order có nhiều OrderItem
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> items;
-<<<<<<< HEAD
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-=======
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
 
     @PrePersist
     protected void onCreate() {
@@ -49,10 +46,8 @@ public class Order {
         if (status == null) status = "PENDING";
     }
 
-    // ===== Constructors =====
     public Order() {}
 
-    // ===== Getters & Setters =====
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -78,10 +73,7 @@ public class Order {
 
     public List<OrderItem> getItems() { return items; }
     public void setItems(List<OrderItem> items) { this.items = items; }
-<<<<<<< HEAD
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
-=======
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
 }

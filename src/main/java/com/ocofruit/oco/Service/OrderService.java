@@ -5,11 +5,7 @@ import com.ocofruit.oco.Model.OrderItem;
 import com.ocofruit.oco.Model.Product;
 import com.ocofruit.oco.Repository.OrderRepository;
 import com.ocofruit.oco.Repository.ProductRepository;
-<<<<<<< HEAD
 import com.ocofruit.oco.Repository.UserRepository;
-
-=======
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,14 +22,26 @@ public class OrderService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Transactional
     public Order createOrder(String customerName, String customerPhone,
                               String address, List<Long> fruitIds) {
+        return createOrder(customerName, customerPhone, address, fruitIds, null);
+    }
 
+    @Transactional
+    public Order createOrder(String customerName, String customerPhone,
+                              String address, List<Long> fruitIds, String username) {
         Order order = new Order();
         order.setCustomerName(customerName);
         order.setCustomerPhone(customerPhone);
         order.setAddress(address);
+
+        if (username != null) {
+            userRepository.findByUsername(username).ifPresent(order::setUser);
+        }
 
         Order savedOrder = orderRepository.save(order);
 
@@ -42,8 +50,7 @@ public class OrderService {
 
         for (Long productId : fruitIds) {
             Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm: " + productId));
-
+                .orElseThrow(() -> new RuntimeException("Product not found: " + productId));
             OrderItem item = new OrderItem(savedOrder, product, 1, product.getPrice());
             items.add(item);
             total += product.getPrice();
@@ -51,7 +58,6 @@ public class OrderService {
 
         savedOrder.setItems(items);
         savedOrder.setTotalPrice(total);
-
         return orderRepository.save(savedOrder);
     }
 
@@ -63,36 +69,4 @@ public class OrderService {
         return orderRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng ID: " + id));
     }
-<<<<<<< HEAD
-    @Autowired
-private UserRepository userRepository;
-
-@Transactional
-public Order createOrder(String customerName, String customerPhone,
-                          String address, List<Long> fruitIds, String username) {
-    Order order = new Order();
-    order.setCustomerName(customerName);
-    order.setCustomerPhone(customerPhone);
-    order.setAddress(address);
-
-    // Gắn user vào order
-    userRepository.findByUsername(username).ifPresent(order::setUser);
-
-    Order savedOrder = orderRepository.save(order);
-
-    List<OrderItem> items = new ArrayList<>();
-    double total = 0;
-    for (Long productId : fruitIds) {
-        Product product = productRepository.findById(productId)
-            .orElseThrow(() -> new RuntimeException("Product not found: " + productId));
-        OrderItem item = new OrderItem(savedOrder, product, 1, product.getPrice());
-        items.add(item);
-        total += product.getPrice();
-    }
-    savedOrder.setItems(items);
-    savedOrder.setTotalPrice(total);
-    return orderRepository.save(savedOrder);
-}
-=======
->>>>>>> 130961b1d5aec426173659935509f03071d3702f
 }
