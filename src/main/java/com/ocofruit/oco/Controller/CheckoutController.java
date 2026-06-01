@@ -1,7 +1,13 @@
 package com.ocofruit.oco.Controller;
 
+import com.ocofruit.oco.Model.User;
+import com.ocofruit.oco.Model.UserProfile;
+import com.ocofruit.oco.Repository.UserRepository;
+import com.ocofruit.oco.Repository.UserProfileRepository;
+
 import com.ocofruit.oco.Model.CartItem;
 import com.ocofruit.oco.Model.Order;
+import com.ocofruit.oco.Model.UserProfile;
 import com.ocofruit.oco.Service.CartService;
 import com.ocofruit.oco.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +22,12 @@ import java.util.stream.Collectors;
 
 @Controller
 public class CheckoutController {
-
+    @Autowired 
+    private com.ocofruit.oco.Repository.UserRepository userRepository;
+    
+    @Autowired 
+    private com.ocofruit.oco.Repository.UserProfileRepository userProfileRepository;
+    
     @Autowired
     private CartService cartService;
 
@@ -31,8 +42,13 @@ public class CheckoutController {
 
         if (boxes.isEmpty()) return "redirect:/cart";
 
+        User user = userRepository.findByUsername(username).orElseThrow();
+        UserProfile profile = userProfileRepository.findByUserId(user.getId()).orElse(new UserProfile());
+
         model.addAttribute("boxes", boxes);
         model.addAttribute("total", total);
+        model.addAttribute("user", user);
+        model.addAttribute("profile", profile);
         model.addAttribute("page", "checkout");
         return "checkout";
     }

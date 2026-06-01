@@ -14,22 +14,25 @@
                 <form th:action="@{/checkout}" method="post" id="checkoutForm">
                     <div class="checkout-field">
                         <label>Full Name</label>
-                        <input type="text" name="customerName" placeholder="Nguyen Van A" required>
+                        <input type="text" name="customerName" th:value="${profile.fullName}" readonly>
                     </div>
                     <br>
+
                     <div class="checkout-field">
                         <label>Email</label>
-                        <input type="email" name="email" placeholder="email@example.com" required>
+                        <input type="email" name="email" th:value="${user.email}">
                     </div>
                     <br>
+
                     <div class="checkout-field">
                         <label>Phone Number</label>
-                        <input type="tel" name="customerPhone" placeholder="+84..." required>
+                        <input type="tel" name="customerPhone" th:value="${profile.phone}">
                     </div>
                     <br>
+
                     <div class="checkout-field">
                         <label>Address</label>
-                        <input type="text" name="address" placeholder="House number, street name" required>
+                        <input type="text" name="address" th:value="${profile.address}">
                     </div>
                     <br>
                     <div class="checkout-field">
@@ -64,7 +67,7 @@
                         </label>
                     </div>
                     <br>
-                    
+
                     <button type="submit" class="btn-place-order">Place Order</button>
                 </form>
             </div>

@@ -254,3 +254,9 @@
     color: rgb(181, 223, 108);
     font-size: 18px;
 }
+
+input[readonly] {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
