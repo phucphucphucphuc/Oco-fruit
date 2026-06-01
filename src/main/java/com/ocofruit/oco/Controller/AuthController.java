@@ -42,10 +42,10 @@ public class AuthController {
             RedirectAttributes redirectAttributes) {
 
         // Verify captcha
-        if (!recaptchaService.verify(captcha)) {
-            redirectAttributes.addFlashAttribute("error", "Please complete the CAPTCHA!");
-            return "redirect:/register";
-        }
+       // if (!recaptchaService.verify(captcha)) {
+           // redirectAttributes.addFlashAttribute("error", "Please complete the CAPTCHA!");
+         //   return "redirect:/register";
+       // }
 
         try {
             userService.register(username, email, password);
