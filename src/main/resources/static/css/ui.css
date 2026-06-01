@@ -433,38 +433,6 @@ footer iframe {
     border: 10px solid rgb(181, 223, 108);
 }
 
-<<<<<<< HEAD
-=======
-footer .logo {
-    width: 100%;
-}
-
-/* ==--------------------------------=== RECAPTCHA ==--------------------------------------=== */
-.recaptcha-wrap {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
-}
-
-/* ==----------------------------=== CONFIRM PASSWORD ===-----------------------------== */
-.password-hint {
-    font-size: 13px;
-    margin-top: 4px;
-    display: block;
-}
-
-.password-hint.match {
-    color: #4CAF50;
-    font-weight: bold;
-}
-
-.password-hint.no-match {
-    color: #e53935;
-    font-weight: bold;
-}
-
-
->>>>>>> b037fc030016486a73966ea62c5f69078b05aab3
 /* ------------------------------------------ AUTH PAGE ------------------------------------------ */
 .auth-main {
     display: flex;
@@ -582,7 +550,6 @@ footer .logo {
     background-color: rgba(255, 255, 255, 0.2);
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.4);
-<<<<<<< HEAD
 }
 
 /* ===== NAV USER ===== */
@@ -1263,6 +1230,4 @@ footer .logo {
 .checkout-total strong {
     color: rgb(181, 223, 108);
     font-size: 18px;
-=======
->>>>>>> b037fc030016486a73966ea62c5f69078b05aab3
 }

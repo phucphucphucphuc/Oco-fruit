@@ -26,19 +26,19 @@ public class ProfileController {
     @Autowired private PasswordEncoder passwordEncoder;
 
     @GetMapping
-    public String viewProfile(Authentication auth, Model model) {
-        User user = userRepository.findByUsername(auth.getName()).orElseThrow();
-        UserProfile profile = userProfileRepository.findByUserId(user.getId())
-                .orElse(new UserProfile());
+public String viewProfile(Authentication auth, Model model) {
+    User user = userRepository.findByUsername(auth.getName()).orElseThrow();
+    UserProfile profile = userProfileRepository.findByUserId(user.getId())
+            .orElse(new UserProfile());
 
-        List<Order> orders = orderRepository.findByUsernameOrderByOrderDateDesc(auth.getName());
+    List<Order> orders = orderRepository.findByUserOrderByOrderDateDesc(user);
 
-        model.addAttribute("page", "profile");
-        model.addAttribute("user", user);
-        model.addAttribute("profile", profile);
-        model.addAttribute("orders", orders);
-        return "profile";
-    }
+    model.addAttribute("page", "profile");
+    model.addAttribute("user", user);
+    model.addAttribute("profile", profile);
+    model.addAttribute("orders", orders);
+    return "profile";
+}
 
     @PostMapping("/update")
     public String updateProfile(@RequestParam String fullName,
